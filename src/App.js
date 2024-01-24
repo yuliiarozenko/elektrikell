@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+// import Test from './Test';
+import ParentComponent from './hw';
 
 function App() {
   return (
@@ -17,6 +19,11 @@ function App() {
         >
           Learn React
         </a>
+        <ParentComponent />
+ 
+        {/* <Test firstName="Peeter" lastName="Ots" age={34}>
+          <div>Children element</div>
+        </Test> */}
       </header>
     </div>
   );
