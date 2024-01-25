@@ -1,3 +1,3 @@
 export * from './constants';
 
-export {default} from './Head';
+export { default } from './Head';

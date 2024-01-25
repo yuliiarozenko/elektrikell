@@ -9,7 +9,7 @@ export const PRICE_BUTTONS = [
     },
 ];
 
-export const DEFAULT_ACTIVE_BUTTONS = "low"
+export const DEFAULT_ACTIVE_BUTTON = "low";
 
 
 

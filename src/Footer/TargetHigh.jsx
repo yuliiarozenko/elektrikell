@@ -3,9 +3,9 @@ import Col from 'react-bootstrap/Col';
 
 function TargetHigh() {
     return (
-    <Row>
-        <Col></Col>
-    </Row>
+        <Row>
+            <Col>TargetHigh</Col>
+        </Row>
     );
 }
 

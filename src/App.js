@@ -4,10 +4,10 @@ import Container from 'react-bootstrap/Container';
 import Body from './Body';
 import Footer from './Footer';
 import Head from './Head';
-import { DEFAULT_ACTIVE_BUTTONS } from "./Head/constants";
+import { DEFAULT_ACTIVE_BUTTON } from './Head/constants';
 
 function App() {
-  const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTONS);
+  const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
   
   return (
     <Container>

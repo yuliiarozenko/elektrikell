@@ -3,17 +3,17 @@ import Col from 'react-bootstrap/Col';
 
 function TargetLow() {
     return (
-    <>
-    <Row>
-        <Col>TargetLow</Col>
-    </Row>
-    <Row>
-        <Col></Col>
-    </Row>
-    <Row>
-        <Col></Col>
-    </Row>
-    </>
+        <>
+            <Row>
+                <Col>TargetLow</Col>
+            </Row>
+            <Row>
+                <Col></Col>
+            </Row>
+            <Row>
+                <Col></Col>
+            </Row>
+        </>
     );
 }
 
