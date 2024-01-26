@@ -1,9 +1,13 @@
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { PRICE_BUTTONS } from './constants'
 
-function Info({ activePrice, setActivePrice }) {    
+
+function Info({ activePrice, setActivePrice }) {
+    const handlePriceChange = (id) => {setActivePrice(id)};
+
     return (
         <>
             <Col></Col>
@@ -13,7 +17,7 @@ function Info({ activePrice, setActivePrice }) {
                         <Button
                             key={id}
                             active={activePrice === id}
-                            onClick={() => setActivePrice(id)}
+                            onClick={() => handlePriceChange(id)}
                             variant="secondary"
                         >
                             {name}
