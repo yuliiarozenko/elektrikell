@@ -8,12 +8,17 @@ import { DEFAULT_ACTIVE_BUTTON } from './Head/constants';
 
 function App() {
   const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
+  const [activeHour, setActiveHour] = useState();
   
   return (
     <Container>
       <Head activePrice={activePrice} setActivePrice={setActivePrice} />
-      <Body />
-      <Footer activePrice={activePrice} />
+      <Body activeHour={activeHour}/>
+      <Footer 
+      activePrice={activePrice}
+      activeHour={activeHour} 
+      setActiveHour={setActiveHour} 
+      />
     </Container>
   );
 }
