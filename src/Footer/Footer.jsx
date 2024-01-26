@@ -1,11 +1,12 @@
 import React from 'react';
 import TargetHigh from './TargetHigh';
 import TargetLow from './TargetLow';
+import { DEFAULT_ACTIVE_BUTTON } from '../Head/constants';
 
 function Footer({activePrice}) {
     return (
         <>
-            {activePrice === 'low' ? <TargetLow /> : <TargetHigh />}
+            {activePrice === DEFAULT_ACTIVE_BUTTON ? <TargetLow /> : <TargetHigh />}
 
         </>
     );
