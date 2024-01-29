@@ -5,16 +5,22 @@ import Body from './Body';
 import Footer from './Footer';
 import Head from './Head';
 import { DEFAULT_ACTIVE_BUTTON } from './Head/constants';
+import LeftSideBar from "./LeftSideBar";
 
 function App() {
   const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
   const [activeHour, setActiveHour] = useState();
+  const [showSideBar, setShowSideBar] = useState (false)
+
+  const handleCloseSideBar = () => setShowSideBar(false)
+  const handleOpenSideBar = () => setShowSideBar(true)
   
   return (
     <Container>
       <Head 
       activePrice={activePrice} 
-      setActivePrice={setActivePrice} 
+      setActivePrice={setActivePrice}
+      handleOpenSideBar={handleOpenSideBar} 
       />
       <Body activeHour={activeHour}/>
       <Footer 
@@ -22,7 +28,8 @@ function App() {
       activeHour={activeHour} 
       setActiveHour={setActiveHour} 
       />
-    </Container>
+      <LeftSideBar show={showSideBar} handleClose={handleCloseSideBar}/>
+      </Container>
   );
 }
 

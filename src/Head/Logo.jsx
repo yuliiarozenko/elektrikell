@@ -1,14 +1,14 @@
 import { Button } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 
-function Logo({ setShowSideBar }) {
+function Logo({ handleOpenSideBar }) {
     return (
         <>
-            <Col> Logo
+            <Col>Logo</Col>
+            <Col>
                 <Button
-                    className='mx-2'
                     variant='primary'
-                    onClick={() => setShowSideBar(true)}
+                    onClick={handleOpenSideBar}
                 > Search </Button>
             </Col>
         </>

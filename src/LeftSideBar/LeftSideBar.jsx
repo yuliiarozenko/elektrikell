@@ -1,17 +1,17 @@
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import DateForm from './DateForm';
+import SearchForm from './SearchForm';
 
-function SideBar({ show, handleClose }) {
+function LeftSideBar({ show, handleClose }) {
     return (
         <Offcanvas show={show} onHide={handleClose}>
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title>Date</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-                <DateForm />
+                <SearchForm />
             </Offcanvas.Body>
         </Offcanvas>
     )
 }
 
-export default SideBar;
+export default LeftSideBar;

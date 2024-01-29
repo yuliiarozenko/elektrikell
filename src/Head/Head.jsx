@@ -1,23 +1,20 @@
-import { useState } from 'react';
 import Logo from './Logo';
-import SideBar from './SideBar';
 import Info from './Info';
 import Row from 'react-bootstrap/Row';
 
 function Head(props) {
-    const [showSideBar, setShowSideBar] = useState(false);
+    const { handleOpenSideBar, ...restProps} = props;
 
-    return ( 
+    return (
     <>
         <Row>
-            <Logo setShowSideBar = {setShowSideBar} />
-            <SideBar show={showSideBar} handleClose={() => setShowSideBar(false)} />
+            <Logo handleOpenSideBar={handleOpenSideBar} />
         </Row>
         <Row>
-            <Info {...props} />
+            <Info {...restProps} />
         </Row>
     </>
-    );
+);
 }
 
 export default Head;
