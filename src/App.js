@@ -12,7 +12,10 @@ function App() {
   
   return (
     <Container>
-      <Head activePrice={activePrice} setActivePrice={setActivePrice} />
+      <Head 
+      activePrice={activePrice} 
+      setActivePrice={setActivePrice} 
+      />
       <Body activeHour={activeHour}/>
       <Footer 
       activePrice={activePrice}

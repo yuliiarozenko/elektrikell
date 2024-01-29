@@ -1,5 +1,5 @@
-export const LOW = 'low';
-export const HIGH = 'high';
+export const LOW = 'Low';
+export const HIGH = 'High';
 
 export const BADGES = [
     {
