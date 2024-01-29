@@ -3,16 +3,18 @@ import Info from './Info';
 import Row from 'react-bootstrap/Row';
 
 function Head(props) {
-    return ( 
+    const { handleOpenSideBar, ...restProps} = props;
+
+    return (
     <>
         <Row>
-            <Logo />
+            <Logo handleOpenSideBar={handleOpenSideBar} />
         </Row>
         <Row>
-            <Info {...props} />
+            <Info {...restProps} />
         </Row>
     </>
-    );
+);
 }
 
 export default Head;
