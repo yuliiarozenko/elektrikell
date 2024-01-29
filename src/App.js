@@ -10,11 +10,12 @@ import LeftSideBar from "./LeftSideBar";
 function App() {
   const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
   const [activeHour, setActiveHour] = useState();
-  const [showSideBar, setShowSideBar] = useState (false)
+  const [showSideBar, setShowSideBar] = useState (false);
 
-  const handleCloseSideBar = () => setShowSideBar(false)
-  const handleOpenSideBar = () => setShowSideBar(true)
-  
+  const handleCloseSideBar = () => setShowSideBar(false);
+  const handleOpenSideBar = () => setShowSideBar(true);
+
+   
   return (
     <Container>
       <Head 
