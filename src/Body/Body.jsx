@@ -9,18 +9,33 @@ import {
     Tooltip,
     Legend,
     Line,
+    Dot,
     ResponsiveContainer
 } from 'recharts';
 import { getPriceDate } from '../services/apiServis';
 import { chatDataConventor } from '../utlis';
+import { currentTimeStamp } from '../utlis/dates';
 
-function Body() {
+function Body({ from, until }) {
     const [priceData, setPriceData] = useState(null);
 
+    const renderDot = (line) => {
+        const {
+            payload: { timestamp },
+        } = line;
+
+        return timestamp === currentTimeStamp() ? (
+            <Dot {...line}>
+                <div></div>
+            </Dot>
+        ) : null;
+    };
+
     useEffect(() => {
-        getPriceDate().then(({ data }) => setPriceData(chatDataConventor(data.ee))
+        getPriceDate(from, until).then(({ data }) =>
+            setPriceData(chatDataConventor(data.ee))
         );
-    }, []);
+    }, [from, until]);
 
     return (
         <Row>
@@ -28,11 +43,16 @@ function Body() {
                 <ResponsiveContainer width='100%' height={400}>
                     <LineChart data={priceData}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="hour" />
+                        <XAxis dataKey="hour" interval={1} />
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line type="monotone" dataKey="price" stroke="#8884d8" />
+                        <Line
+                            type="sterAfter"
+                            dataKey="price"
+                            stroke="#8884d8"
+                            dot={renderDot}
+                        />
                     </LineChart>
                 </ResponsiveContainer>
 
