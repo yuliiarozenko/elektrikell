@@ -1,9 +1,6 @@
 const apiUrl = 'https://dashboard.elering.ee/api';
 
-export const getPriceDate = async () => {
-    const from = '2020-05-31T20:59:59.999Z';
-    const until = '2020-06-30T20:59:59.999Z';
-
+export const getPriceDate = async (from, until) => {
     const data = new URLSearchParams({
         start: from,
         end: until,
