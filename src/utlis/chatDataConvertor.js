@@ -6,3 +6,4 @@ return priceData.map((data) => ({
     hour: moment.unix(data.timestamp).format('hh'),
 }));
 }
+
