@@ -23,7 +23,7 @@ function SearchForm() {
                 <Form.Control type="date" placeholder='Date until' name='until' />
             </Form.Group>
 
-            <Button variant="primary" classNamew="w-100" type='submit'>
+            <Button variant="primary" className="w-100" type='submit'>
                 Search
             </Button>
         </Form>

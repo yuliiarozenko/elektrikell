@@ -4,10 +4,27 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { PRICE_BUTTONS, BADGES } from './constants';
 import Badge from 'react-bootstrap/Badge';
+import { useEffect, useState } from 'react';
+import { getLatestPrice } from '../services/apiServis';
 
 
 function Info({ activePrice, setActivePrice }) {
-    const handlePriceChange = (id) => {setActivePrice(id)};
+    const [currentPrice, setCurrentPrice] = useState(null);
+
+    useEffect(() => {
+        const fetchLatestPrice = async () => {
+            try {
+                const latestPriceResponse = await getLatestPrice('EE');
+                const latestPrice = latestPriceResponse.price;
+                setCurrentPrice(latestPrice);
+            } catch (error) {
+                console.error('Error fetching latest price:', error);
+            }
+        };
+        fetchLatestPrice();
+    }, []);
+
+    const handlePriceChange = (id) => { setActivePrice(id) };
 
     return (
         <>
@@ -30,8 +47,14 @@ function Info({ activePrice, setActivePrice }) {
                 </ButtonGroup>
             </Col>
             <Col className='text-end'>
-                    <h2>XX.XX</h2>
-                    <div>cent / kilowatt-hour</div>
+                {currentPrice ? (
+                    <>
+                        <h2>{currentPrice}</h2>
+                        <div>cent / kilowatt-hour</div>
+                    </>
+                ) : (
+                    <div>Loading...</div>
+                )}
             </Col>
         </>
     );

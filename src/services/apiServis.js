@@ -13,3 +13,8 @@ export const getPriceDate = async () => {
 
     return await response.json();
 };
+
+export const getLatestPrice = async (group) => {
+    const response = await fetch(`${apiUrl}/nps/price/${group}/latest`);
+    return await response.json();
+};
