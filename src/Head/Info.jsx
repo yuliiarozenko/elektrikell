@@ -10,6 +10,8 @@ import { getLatestPrice } from '../services/apiServis';
 
 function Info({ activePrice, setActivePrice }) {
     const [currentPrice, setCurrentPrice] = useState(null);
+    
+
 
     useEffect(() => {
         const fetchLatestPrice = async () => {
@@ -24,7 +26,8 @@ function Info({ activePrice, setActivePrice }) {
         fetchLatestPrice();
     }, []);
 
-    const handlePriceChange = (id) => { setActivePrice(id) };
+    const handlePriceChange = (id) => { setActivePrice(id) 
+    };
 
     return (
         <>
