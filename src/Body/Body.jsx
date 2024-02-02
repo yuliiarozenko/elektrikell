@@ -10,14 +10,21 @@ import {
     Legend,
     Line,
     Dot,
-    ResponsiveContainer
+    ResponsiveContainer,
+    ReferenceArea
 } from 'recharts';
 import { getPriceDate } from '../services/apiServis';
 import { chatDataConventor } from '../utlis';
 import { currentTimeStamp } from '../utlis/dates';
+import { getLowPriceInterval } from '../utlis/buildIntervals';
+import lodash from 'lodash';
 
-function Body({ from, until }) {
-    const [priceData, setPriceData] = useState(null);
+
+
+function Body({ from, until, activeHour }) {
+    const [priceData, setPriceData] = useState([]);
+    const [x1, setX1] = useState(0);
+    const [x2, setX2] = useState(0);
 
     const renderDot = (line) => {
         const {
@@ -32,10 +39,24 @@ function Body({ from, until }) {
     };
 
     useEffect(() => {
-        getPriceDate(from, until).then(({ data }) =>
-            setPriceData(chatDataConventor(data.ee))
+        getPriceDate(from, until).then(({ data }) => {
+            const priceData = chatDataConventor(data.ee);
+
+            setPriceData(priceData);
+
+        }
+
         );
     }, [from, until]);
+
+    useEffect(() => {
+        const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
+
+        if (lowPriceIntervals.length) {
+            setX1(lowPriceIntervals[0].index);
+            setX2(lodash.last(lowPriceIntervals).index);
+        }
+    }, [priceData, activeHour]);
 
     return (
         <Row>
@@ -53,6 +74,7 @@ function Body({ from, until }) {
                             stroke="#8884d8"
                             dot={renderDot}
                         />
+                        <ReferenceArea x1={x1} x2={x2} stroke='red' strokeOpacity={0.3} />
                     </LineChart>
                 </ResponsiveContainer>
 
