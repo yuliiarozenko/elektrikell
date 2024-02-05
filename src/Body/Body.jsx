@@ -11,7 +11,8 @@ import {
     Line,
     Dot,
     ResponsiveContainer,
-    ReferenceArea
+    ReferenceArea,
+    ReferenceLine
 } from 'recharts';
 import { getPriceDate } from '../services/apiServis';
 import { chatDataConventor } from '../utlis';
@@ -25,6 +26,8 @@ function Body({ from, until, activeHour }) {
     const [priceData, setPriceData] = useState([]);
     const [x1, setX1] = useState(0);
     const [x2, setX2] = useState(0);
+
+    const [averagePrice, setAveragePrice] = useState(0);
 
     const renderDot = (line) => {
         const {
@@ -41,12 +44,12 @@ function Body({ from, until, activeHour }) {
     useEffect(() => {
         getPriceDate(from, until).then(({ data }) => {
             const priceData = chatDataConventor(data.ee);
-
             setPriceData(priceData);
 
-        }
-
-        );
+            const priceSum = priceData.reduce((sum, data) => sum + data.price, 0);
+            const averagePrice = priceSum / priceData.length;
+            setAveragePrice(averagePrice);
+        });
     }, [from, until]);
 
     useEffect(() => {
@@ -75,6 +78,7 @@ function Body({ from, until, activeHour }) {
                             dot={renderDot}
                         />
                         <ReferenceArea x1={x1} x2={x2} stroke='red' strokeOpacity={0.3} />
+                        <ReferenceLine y={averagePrice} stroke="green" strokeDasharray="3 3" />
                     </LineChart>
                 </ResponsiveContainer>
 
