@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {
@@ -20,14 +20,19 @@ import { currentTimeStamp } from '../utlis/dates';
 import { getLowPriceInterval } from '../utlis/buildIntervals';
 import { getAveragePrice } from '../utlis/maths';
 import lodash from 'lodash';
+import { ERROR_MESSAGE } from './constants';
 
 
-function Body({ from, until, activeHour }) {
+function Body({ from, until, activeHour, setErrorMessage, setBestUntil }) {
     const [priceData, setPriceData] = useState([]);
     const [x1, setX1] = useState(0);
     const [x2, setX2] = useState(0);
 
-    const renderDot = (line) => {
+    const averagePrice = useMemo(() => {
+        return getAveragePrice(priceData);
+    }, [priceData]);
+
+    const renderDot = useCallback((line) => {
         const {
             payload: { timestamp },
         } = line;
@@ -37,18 +42,20 @@ function Body({ from, until, activeHour }) {
                 <div></div>
             </Dot>
         ) : null;
-    };
+    }, []);
 
     useEffect(() => {
-        getPriceDate(from, until).then(({ data }) => {
-            const priceData = chatDataConventor(data.ee);
+        getPriceDate(from, until)
+            .then(({ data, success }) => {
+                if (!success) throw new Error();
+                
+                const priceData = chatDataConventor(data.ee);                
 
-            setPriceData(priceData);
+                setPriceData(priceData);
 
-        }
-
-        );
-    }, [from, until]);
+            })
+            .catch(() => setErrorMessage(ERROR_MESSAGE));
+    }, [from, until, setErrorMessage]);
 
     useEffect(() => {
         const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
@@ -56,8 +63,9 @@ function Body({ from, until, activeHour }) {
         if (lowPriceIntervals.length) {
             setX1(lowPriceIntervals[0].position);
             setX2(lodash.last(lowPriceIntervals).position);
+            setBestUntil(lowPriceIntervals[0].timestamp);
         }
-    }, [priceData, activeHour]);
+    }, [priceData, activeHour, setBestUntil]);
 
     return (
         <Row>
@@ -76,11 +84,11 @@ function Body({ from, until, activeHour }) {
                             dot={renderDot}
                         />
                         <ReferenceArea x1={x1} x2={x2} stroke='red' strokeOpacity={0.3} />
-                        <ReferenceLine 
-                        y={getAveragePrice(priceData)} 
-                        label="Avrage"
-                        stroke="green" 
-                        strokeDasharray="3 3" 
+                        <ReferenceLine
+                            y={averagePrice}
+                            label="Average"
+                            stroke="green"
+                            strokeDasharray="3 3"
                         />
                     </LineChart>
                 </ResponsiveContainer>

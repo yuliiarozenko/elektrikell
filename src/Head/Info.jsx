@@ -7,19 +7,27 @@ import { PRICE_BUTTONS, BADGES } from './constants';
 import Badge from 'react-bootstrap/Badge';
 import { getCurrentPrice } from '../services/apiServis';
 import { mwToKw, addTax } from '../utlis/priceFormat';
+import { ERROR_MESSAGE } from './constants';
 
 
-function Info({ activePrice, setActivePrice }) {
-    const handlePriceChange = (id) => {setActivePrice(id)};
+function Info({ activePrice, setActivePrice, setErrorMessage }) {
+    const handlePriceChange = (id) => { setActivePrice(id) };
 
     const [currentPrice, setCurrentPrice] = useState(0);
 
     useEffect(() => {
-        (async() => {
-            const { data } = await getCurrentPrice();
-            setCurrentPrice(addTax(mwToKw(data[0].price), 'ee'));
-        }) ()
-    }, []);
+        (async () => {
+            try {
+                const { data, success } = await getCurrentPrice();
+
+                if (!success) throw new Error();
+
+                setCurrentPrice(addTax(mwToKw(data[0].price), 'ee'));
+            } catch {
+                setErrorMessage(ERROR_MESSAGE);
+            }
+        })()
+    }, [setErrorMessage]);
 
     return (
         <>
@@ -42,8 +50,8 @@ function Info({ activePrice, setActivePrice }) {
                 </ButtonGroup>
             </Col>
             <Col className='text-end'>
-                    <h2>{currentPrice}</h2>
-                    <div>cent / kilowatt-hour</div>
+                <h2>{currentPrice}</h2>
+                <div>cent / kilowatt-hour</div>
             </Col>
         </>
     );
