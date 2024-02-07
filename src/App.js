@@ -7,6 +7,7 @@ import Head from './Head';
 import { DEFAULT_ACTIVE_BUTTON } from './Head/constants';
 import LeftSideBar from "./LeftSideBar";
 import { getDefaultFrom, getDefaultUntil } from "./utlis/dates";
+import ErrorModal from "./ErrorModal";
 
 function App() {
   const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
@@ -14,6 +15,8 @@ function App() {
   const [showSideBar, setShowSideBar] = useState (false);
   const [from, setFrom] = useState(getDefaultFrom());
   const [until, setUntil] = useState(getDefaultUntil());
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [bestUntil, setBestUntil] = useState(0);
 
   const handleCloseSideBar = () => setShowSideBar(false);
   const handleOpenSideBar = () => setShowSideBar(true);
@@ -24,13 +27,21 @@ function App() {
       <Head 
       activePrice={activePrice} 
       setActivePrice={setActivePrice}
-      handleOpenSideBar={handleOpenSideBar} 
+      handleOpenSideBar={handleOpenSideBar}
+      setErrorMessage={setErrorMessage} 
       />
-      <Body activeHour={activeHour} from={from} until={until} />
+      <Body 
+      activeHour={activeHour} 
+      from={from} 
+      until={until}
+      setErrorMessage={setErrorMessage}
+      setBestUntil={setBestUntil}
+      />
       <Footer 
       activePrice={activePrice}
       activeHour={activeHour} 
       setActiveHour={setActiveHour} 
+      bestUntil={bestUntil}
       />
       <LeftSideBar 
       show={showSideBar} 
@@ -38,7 +49,12 @@ function App() {
       from={from} 
       until={until}
       setFrom={setFrom}
-      setUntil={setUntil}/>
+      setUntil={setUntil}
+      />
+      <ErrorModal 
+      show={!!errorMessage} 
+      handleClose={() => setErrorMessage(null)}
+      errorMessage={errorMessage}/>
       </Container>
   );
 }
