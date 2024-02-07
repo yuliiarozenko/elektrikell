@@ -11,14 +11,15 @@ import {
     Line,
     Dot,
     ResponsiveContainer,
-    ReferenceArea
+    ReferenceArea,
+    ReferenceLine
 } from 'recharts';
 import { getPriceDate } from '../services/apiServis';
 import { chatDataConventor } from '../utlis';
 import { currentTimeStamp } from '../utlis/dates';
 import { getLowPriceInterval } from '../utlis/buildIntervals';
+import { getAveragePrice } from '../utlis/maths';
 import lodash from 'lodash';
-
 
 
 function Body({ from, until, activeHour }) {
@@ -75,6 +76,12 @@ function Body({ from, until, activeHour }) {
                             dot={renderDot}
                         />
                         <ReferenceArea x1={x1} x2={x2} stroke='red' strokeOpacity={0.3} />
+                        <ReferenceLine 
+                        y={getAveragePrice(priceData)} 
+                        label="Avrage"
+                        stroke="green" 
+                        strokeDasharray="3 3" 
+                        />
                     </LineChart>
                 </ResponsiveContainer>
 
