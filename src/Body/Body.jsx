@@ -23,7 +23,7 @@ import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
 
 
-function Body({ from, until, activeHour, setErrorMessage, setBestUntil }) {
+function Body({ from, until, activeHour, setErrorMessage, setBestUntil, setLoading }) {
     const [priceData, setPriceData] = useState([]);
     const [x1, setX1] = useState(0);
     const [x2, setX2] = useState(0);
@@ -52,10 +52,13 @@ function Body({ from, until, activeHour, setErrorMessage, setBestUntil }) {
                 const priceData = chatDataConventor(data.ee);                
 
                 setPriceData(priceData);
-
+                setLoading(false);
             })
-            .catch(() => setErrorMessage(ERROR_MESSAGE));
-    }, [from, until, setErrorMessage]);
+            .catch(() => {
+            setErrorMessage(ERROR_MESSAGE);
+            setLoading(false);
+            });
+    }, [from, until, setErrorMessage, setLoading]);
 
     useEffect(() => {
         const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);

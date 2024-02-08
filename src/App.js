@@ -8,6 +8,7 @@ import { DEFAULT_ACTIVE_BUTTON } from './Head/constants';
 import LeftSideBar from "./LeftSideBar";
 import { getDefaultFrom, getDefaultUntil } from "./utlis/dates";
 import ErrorModal from "./ErrorModal";
+import Loading from "./Loading";
 
 function App() {
   const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
@@ -17,13 +18,17 @@ function App() {
   const [until, setUntil] = useState(getDefaultUntil());
   const [errorMessage, setErrorMessage] = useState(null);
   const [bestUntil, setBestUntil] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const handleCloseSideBar = () => setShowSideBar(false);
   const handleOpenSideBar = () => setShowSideBar(true);
 
-   
   return (
     <Container>
+       {loading ? (
+        <Loading />
+      ) : (
+        <>
       <Head 
       activePrice={activePrice} 
       setActivePrice={setActivePrice}
@@ -36,6 +41,7 @@ function App() {
       until={until}
       setErrorMessage={setErrorMessage}
       setBestUntil={setBestUntil}
+      setLoading={setLoading}
       />
       <Footer 
       activePrice={activePrice}
@@ -55,6 +61,8 @@ function App() {
       show={!!errorMessage} 
       handleClose={() => setErrorMessage(null)}
       errorMessage={errorMessage}/>
+      </>
+      )}
       </Container>
   );
 }
