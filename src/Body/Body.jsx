@@ -23,7 +23,14 @@ import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
 
 
-function Body({ from, until, activeHour, setErrorMessage, setBestUntil }) {
+function Body({
+    from,
+    until,
+    activeHour,
+    setErrorMessage,
+    setBestUntil,
+    setIsLoading
+}) {
     const [priceData, setPriceData] = useState([]);
     const [x1, setX1] = useState(0);
     const [x2, setX2] = useState(0);
@@ -48,14 +55,14 @@ function Body({ from, until, activeHour, setErrorMessage, setBestUntil }) {
         getPriceDate(from, until)
             .then(({ data, success }) => {
                 if (!success) throw new Error();
-                
-                const priceData = chatDataConventor(data.ee);                
+
+                const priceData = chatDataConventor(data.ee);
 
                 setPriceData(priceData);
-
             })
-            .catch(() => setErrorMessage(ERROR_MESSAGE));
-    }, [from, until, setErrorMessage]);
+            .catch(() => setErrorMessage(ERROR_MESSAGE))
+            .finally(() => setIsLoading(false));
+    }, [from, until, setErrorMessage, setIsLoading]);
 
     useEffect(() => {
         const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
