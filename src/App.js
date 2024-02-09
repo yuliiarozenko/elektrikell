@@ -17,6 +17,7 @@ function App() {
   const [until, setUntil] = useState(getDefaultUntil());
   const [errorMessage, setErrorMessage] = useState(null);
   const [bestUntil, setBestUntil] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleCloseSideBar = () => setShowSideBar(false);
   const handleOpenSideBar = () => setShowSideBar(true);
@@ -36,6 +37,7 @@ function App() {
       until={until}
       setErrorMessage={setErrorMessage}
       setBestUntil={setBestUntil}
+      setIsLoading = {setIsLoading}
       />
       <Footer 
       activePrice={activePrice}
@@ -54,7 +56,9 @@ function App() {
       <ErrorModal 
       show={!!errorMessage} 
       handleClose={() => setErrorMessage(null)}
-      errorMessage={errorMessage}/>
+      errorMessage={errorMessage}
+      />
+      {isLoading && <h1>Loading...</h1>}
       </Container>
   );
 }
