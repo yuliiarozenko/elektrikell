@@ -11,6 +11,7 @@ import ErrorModal from "./ErrorModal";
 import { useParams } from "react-router-dom";
 
 function ElectricPrice() {
+  console.log('test')
   const params = useParams();
 
   const [activePrice, setActivePrice] = useState(DEFAULT_ACTIVE_BUTTON);
