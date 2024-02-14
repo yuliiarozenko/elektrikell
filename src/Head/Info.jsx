@@ -10,11 +10,14 @@ import { mwToKw, addTax } from '../utlis/priceFormat';
 import { ERROR_MESSAGE } from './constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { setActivePrice, setErrorMessage } from '../services/stateService';
+// import { ElectricPriceContext } from '../contexts/ElectricPriceContext';
 
 
 function Info() {
     
     const dispatch = useDispatch();
+
+    // const { values } = useContext(ElectricPriceContext);
 
     const [currentPrice, setCurrentPrice] = useState(0);
     const activePrice = useSelector((state) => state.main.activePrice);
