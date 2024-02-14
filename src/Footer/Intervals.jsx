@@ -6,7 +6,6 @@ import { INTERVALS } from './constants';
 import { useSelector, useDispatch } from 'react-redux';
 import { setActiveHour } from '../services/stateService';
 
-
 function Intervals() {
     const dispatch = useDispatch();
     const activeHour= useSelector((state) => state.main.activeHour);
