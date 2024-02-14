@@ -19,7 +19,7 @@ function TargetLow(props) {
             </Row>
             <Row>
                 <Col>
-                {bestUntil && (<Countdown date={bestUntil * 1000}>
+                {bestUntil && (<Countdown date={bestUntil * 1000} className="countdown-container">
                 <div>The time is now</div>
                 </Countdown>
                 )}

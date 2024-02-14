@@ -21,17 +21,18 @@ import { getLowPriceInterval } from '../utlis/buildIntervals';
 import { getAveragePrice } from '../utlis/maths';
 import lodash from 'lodash';
 import { ERROR_MESSAGE } from './constants';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setErrorMessage } from "../services/stateService";
 
 
 function Body({
-    setErrorMessage,
     setBestUntil,
     setIsLoading
 }) {
     const [priceData, setPriceData] = useState([]);
     const [x1, setX1] = useState(0);
     const [x2, setX2] = useState(0);
+    const dispatch = useDispatch();
 
     const activeHour= useSelector((state) => state.main.activeHour);
     const from= useSelector((state) => state.date.from);
@@ -62,9 +63,9 @@ function Body({
 
                 setPriceData(priceData);
             })
-            .catch(() => setErrorMessage(ERROR_MESSAGE))
+            .catch(() => dispatch(setErrorMessage(ERROR_MESSAGE)))
             .finally(() => setIsLoading(false));
-    }, [from, until, setErrorMessage, setIsLoading]);
+    }, [from, until, setIsLoading, dispatch]);
 
     useEffect(() => {
         const lowPriceIntervals = getLowPriceInterval(priceData, activeHour);
